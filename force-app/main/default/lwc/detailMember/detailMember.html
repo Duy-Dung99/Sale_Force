@@ -1,0 +1,71 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <div class="slds-modal__container">
+        <div class="slds-modal__header">
+            <h1 class="slds-modal__title slds-hyphenate">Details Member</h1>
+        </div>
+        <div class="slds-modal__content slds-p-around_medium">
+            <lightning-layout>
+                <lightning-layout-item size="6" class="lwc-layout-item">
+                    <lightning-input class="full_name lwc-boder-input" value={detailMember.full_name}
+                        data-edit="full_name" type="text" label="Full Name" name="full_name" readonly></lightning-input>
+                    <span class="lwc-icon">
+                        <lightning-icon icon-name="utility:edit" alternative-text="Connected" title="Connected"
+                            size="x-small"></lightning-icon>
+                    </span>
+                </lightning-layout-item>
+                <lightning-layout-item size="6" class="lwc-layout-item lwc-boder-input">
+                    <lightning-input class="gender" value={detailMember.gender} data-edit="gender" type="checkbox"
+                        label="Gender" name="gender" checked></lightning-input>
+                    <span>{detailMember.gender}</span>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout>
+                <lightning-layout-item size="6" class="lwc-layout-item">
+                    <lightning-input class="birdthday lwc-boder-input" value={detailMember.birthday}
+                        data-edit="birdthday" type="date" label="Birdthday" name="birdthday" readonly></lightning-input>
+                    <!-- <span class="lwc-icon">
+                        <lightning-icon icon-name="utility:edit" alternative-text="Connected" title="Connected"
+                            size="x-small"></lightning-icon>
+                    </span> -->
+                </lightning-layout-item>
+                <lightning-layout-item size="6" class="lwc-layout-item">
+                    <lightning-input class="phone lwc-boder-input" value={detailMember.phone} data-edit="phone"
+                        type="number" label="Phone" name="phone" readonly></lightning-input>
+                    <span class="lwc-icon">
+                        <lightning-icon icon-name="utility:edit" alternative-text="Connected" title="Connected"
+                            size="x-small"></lightning-icon>
+                    </span>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout>
+                <lightning-layout-item size="6" class="lwc-layout-item">
+                    <lightning-input class="email lwc-boder-input" value={detailMember.email} data-edit="email"
+                        type="email" label="Email" name="email" readonly></lightning-input>
+                    <span class="lwc-icon">
+                        <lightning-icon icon-name="utility:edit" alternative-text="Connected" title="Connected"
+                            size="x-small"></lightning-icon>
+                    </span>
+                </lightning-layout-item>
+                <lightning-layout-item size="6" class="lwc-layout-item lwc-boder-input">
+                    <lightning-input class="status " value={detailMember.status} data-edit="status" type="checkbox"
+                        label="Status" name="status" checked></lightning-input>
+                    <span>{detailMember.status}</span>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout>
+                <lightning-layout-item size="6" class="lwc-layout-item">
+                    <lightning-input class="owner lwc-boder-input" value={detailMember.owner_user} data-edit="owner"
+                        type="text" label="Owner" name="owner" readonly></lightning-input>
+                    <span class="lwc-icon">
+                        <lightning-icon icon-name="utility:edit" alternative-text="Connected" title="Connected"
+                            size="x-small"></lightning-icon>
+                    </span>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={handleCancelDetail}>Cancel</button>
+        </div>
+    </div>
+</template>

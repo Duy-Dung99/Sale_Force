@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.lwc-flex {
+    display: flex;
+    margin: 8px 0;
+}
+
+.slds-p-around_x-small {
+    padding: 24px;
+    margin: auto;
+}
+
+.slds-p-around_x-small h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.lwc-btn {
+    margin-right: 6px;
+}
+
+.slds-button {
+    background-color: #3498db !important;
+    color: black !important;
+}
+
+.lwc-box-btn {
+    display: flex;
+    margin-left: 45%;
+}

@@ -1,0 +1,22 @@
+.lwc-limit {
+    display: flex;
+    margin-right: 16px;
+}
+
+.slds-p-around_medium {
+    padding: 0 !important;
+}
+
+.lwc-btn-limit {
+    justify-content: end;
+}
+
+.lwc-number-limit {
+    margin: 0 16px;
+    padding: 8px;
+}
+
+.lwc-number-page {
+    font-weight: bold;
+    padding: 0 6px;
+}

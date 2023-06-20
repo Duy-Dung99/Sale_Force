@@ -1,0 +1,15 @@
+.lwc-layout-item {
+    position: relative;
+    padding: 0 12px;
+    margin-bottom: 8px;
+}
+
+.lwc-icon {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+}
+
+.lwc-boder-input {
+    border-bottom: 1px solid gray;
+}

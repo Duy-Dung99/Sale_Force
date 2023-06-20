@@ -1,0 +1,108 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-card>
+        <form action="">
+            <div class="lwc-form">
+                <div class="lwc-box">
+                    <div class="lwc-left">
+                        <p>User Name(*):</p>
+                    </div>
+                    <div class="lwc-right">
+                        <lightning-input class="user-name" name="userName" type="text" value={userNamValue}
+                            onchange={handleChangeValidUser}></lightning-input>
+                        <p lwc:if={isUserNameValid} class="slds-text-color_error">*Please enter a valid user name
+                            address.
+                        </p>
+                    </div>
+                </div>
+                <div class="lwc-box">
+                    <div class="lwc-left">
+                        <p>Gender(*):</p>
+                    </div>
+                    <div class="lwc-right lwc-flex raido-group-container">
+                        <lightning-radio-group class="my-radio-group" name="gender" options={genderOptions}
+                            value={genderValue} type="radio" onchange={changValueGender}></lightning-radio-group>
+                        <p class="check-valida-gender slds-text-color_error" lwc:if={isGenderValid}>*Please enter a
+                            Gender
+                        </p>
+                    </div>
+                </div>
+                <div class="lwc-box">
+                    <div class="lwc-left">
+                        <p>Birdthday(*):</p>
+                    </div>
+                    <div class="lwc-right">
+                        <lightning-input class="birdthday" type="date" name="birdthday" value={birdthdayValue}
+                            onchange={handleDateChange}></lightning-input>
+                        <p class="slds-text-color_error" lwc:if={isBirthdayValid}>*Please enter a birdthday 1900~2000
+                        </p>
+                    </div>
+                </div>
+                <div class="lwc-box">
+                    <div class="lwc-left">
+                        <p>Mobie Number(*):</p>
+                    </div>
+                    <div class="lwc-right">
+                        <div class="slds-p-around_medium">
+                            <lightning-input class="mobie-number" type="phone" name="phone" value={mobieNumberValue}
+                                onchange={handleChangeValidMobie}></lightning-input>
+                            <p lwc:if={isPhoneValid} class="slds-text-color_error">*Please enter a valid phone address.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lwc-box">
+                    <div class="lwc-left">
+                        <p>Email(*):</p>
+                    </div>
+                    <div class="lwc-right">
+                        <div class="slds-p-around_medium">
+                            <lightning-input class="email" value={emailValue} name="email" type="email"
+                                onchange={handleChangeValidEmail}></lightning-input>
+                            <p lwc:if={isEmailValid} class="slds-text-color_error">*Please enter a valid email address.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="lwc-box">
+                    <div class="lwc-left">
+                        <p>Other:</p>
+                    </div>
+                    <div class="lwc-right">
+                        <lightning-textarea type="text" value={otherValue} name="other" onchange={handleChangeOther}
+                            class="other"></lightning-textarea>
+                    </div>
+                </div>
+                <div class="lwc-box" if:true={isSetupEnabled}>
+                    <div class="lwc-left">
+                        <p>status(*):</p>
+                    </div>
+                    <div class="lwc-right lwc-flex raido-group-container">
+                        <template for:each={statusOptions} for:item="item">
+                            <fieldset key={item.value} style="display: block; float: left; margin-right:12px">
+                                <div class="slds-form-element__control">
+                                    <span class="slds-radio">
+                                        <input name="status" class="validate_status" id={item.value} type="radio"
+                                            value={item.value} onchange={handleChangeStatus} />
+                                        <label class="slds-radio__label" for={item.value}>
+                                            <span class="slds-radio_faux"></span>
+                                            <span class="slds-form-element__label">{item.label}</span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </fieldset>
+                        </template>
+                    </div>
+                    <p lwc:if={isStatusValid} class="slds-text-color_error lwc-status">*Please enter a valid status
+                    </p>
+                </div>
+                <div class="lwc-btn">
+                    <lightning-button variant="brand" label="Add New" title="Primary action" onclick={handleAddNew}
+                        class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </div>
+        </form>
+    </lightning-card>
+
+</template>

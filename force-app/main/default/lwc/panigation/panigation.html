@@ -1,0 +1,39 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-layout class="lwc-btn-limit slds-p-top_medium">
+        <lightning-layout-item class="lwc-limit">
+            <div class="slds-p-around_medium">
+                <lightning-button-menu alternative-text="Show menu" onselect={handleOnselectLitmit}>
+                    <lightning-menu-item value="10" label="10"></lightning-menu-item>
+                    <lightning-menu-item value="20" label="20"></lightning-menu-item>
+                    <lightning-menu-item value="50" label="50"></lightning-menu-item>
+                    <lightning-menu-item value="50" label="50"></lightning-menu-item>
+                    <lightning-menu-item value="100" label="100"></lightning-menu-item>
+                </lightning-button-menu>
+            </div>
+            <lightning-button label={pageSize}></lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item>
+            <lightning-button icon-name="utility:jump_to_left" style="margin-right: 8px;" label="First"
+                onclick={goToFirst} disabled={disablePrevious}></lightning-button>
+            <lightning-button icon-name="utility:chevronleft" label="Previous" disabled={disablePrevious}
+                onclick={goToPrevious}></lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item class="lwc-number-limit">
+            <p>
+                Displaying
+                <span class="lwc-number-page">{pageNumber}</span>
+                of
+                <span if:true={totalPage} class="lwc-number-page">{totalPage}</span>
+                <span if:false={totalPage} class="lwc-number-page">0</span>
+                Page
+            </p>
+        </lightning-layout-item>
+        <lightning-layout-item style="margin-right: 16px;">
+            <lightning-button icon-name="utility:chevronright" icon-position="right" style="margin-right: 8px;"
+                label="Next" onclick={goToNext} disabled={disableNext}></lightning-button>
+            <lightning-button icon-name="utility:jump_to_right" icon-position="right" label="Last" onclick={goToLast}
+                disabled={disableNext}></lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

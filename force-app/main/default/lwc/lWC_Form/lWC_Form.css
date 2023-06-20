@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+.lwc-form {
+    border: 1px solid #74b9ff;
+    padding: 12px;
+    width: 400px;
+    margin: auto;
+
+}
+
+.lwc-box {
+    display: flex;
+    align-items: center;
+}
+
+.lwc-left {
+    width: 30%;
+}
+
+.lwc-left p {
+    margin-top: 16px;
+}
+
+.lwc-right {
+    width: 70%;
+}
+
+.lwc-flex {
+    margin-top: 18px;
+    align-items: center;
+    display: flex;
+}
+
+.check-valida-gender {
+    color: red;
+    font-size: 12px;
+    margin-top: 7px;
+}
+
+.slds-form-element__control {
+    display: flex !important;
+}
+
+
+.lwc-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.error-message {
+    color: red;
+}
+
+.slds-grid {
+    margin-top: 12px;
+}
+
+.lwc-border {
+    border: 1px solid #74b9ff;
+    padding: 4px;
+}
+
+.slds-modal__container {
+    margin: auto;
+}
+
+.slds-modal__content {
+    padding: 24px;
+}
+
+.slds-modal__footer {
+    padding: 8px 24px;
+}
+
+.slds-button {
+    width: 90px;
+}
+
+.raido-group {
+    margin-right: 12px;
+}
+
+.lwc-status {
+    position: absolute;
+    top: 85%;
+    left: 46.15%;
+    font-size: 13px;
+}
+
+.THIS .slds-form-element__control {
+    display: flex !important;
+}

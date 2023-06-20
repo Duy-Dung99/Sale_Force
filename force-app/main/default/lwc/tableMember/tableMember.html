@@ -1,0 +1,119 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-card title="Manage Accounts">
+        <lightning-layout class="lwc-layout-top">
+            <lightning-layout-item style="padding-left: 15px;">
+                <lightning-button style="margin-right: 8px;" variant="brand" label="New" title="New"
+                    icon-name="utility:add" onclick={accountNewMember}></lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item style="padding-right: 12px;">
+                <lightning-button style="padding-right: 16px;" variant="brand-outline" label="Change"
+                    title="Change"></lightning-button>
+                <lightning-button variant="brand-outline" class="slds-p-left_x-small" label="Delete" title="delete"
+                    onclick={handleDelete}></lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout style="justify-content: end;">
+            <lightning-layout-item padding="around-small">
+                <lightning-button class="lwc-status" variant="brand-outline" label="Status" title="Status"
+                    value={valStatus} icon-name="utility:down" onclick={handleStatus}></lightning-button>
+                <lightning-button variant="brand-outline" label="Change Owner" title="owner" icon-name="utility:down"
+                    onclick={handleOwner}></lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="3">
+                <lightning-input data-search="condition" variant="label-hidden" type="search"
+                    onchange={changeSearch}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small">
+                <lightning-button variant="brand" onclick={search} label="Search" title="Search"></lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <lightning-layout class="lwc-border">
+            <lightning-layout-item>
+                <lightning-datatable key-field="id" show-row-number-column row-number-offset={rowOffset}
+                    data={newGenerateData} columns={columns} onrowaction={handleRowAction} onclick={handleSelectdRows}
+                    default-sort-direction={defaultSortDirection} sorted-direction={sortDirection} sorted-by={sortBy}
+                    onsort={onHandleSort}>
+                </lightning-datatable>
+                <span class="lwc-no-data" if:true={isCheckData}>
+                    <lightning-icon class="slds-p-top_x-small" icon-name="utility:open_folder" size="small"
+                        alternative-text="Warning!" title="Warning" style="margin-right: 8px;"></lightning-icon>
+                    <label class="slds-p-top_x-small">No Data</label>
+                </span>
+            </lightning-layout-item>
+        </lightning-layout>
+
+
+        <!-- ---------panigation- -->
+        <c-panigation pagesize={pageSize} pagenumber={pageNumber} onnext={goToNext} onprevious={goToPrevious}
+            onfirst={goToFirst} onlast={goToLast} onrenderdata={handleOnselectLitmit}></c-panigation>
+
+
+        <!-- -------modal Owner -->
+        <template if:true={showOwnerModal}>
+            <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 class="slds-modal__title slds-hyphenate">Change Owner</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-layout class="lwc-modal-owner">
+                            <lightning-layout-item class="lwc-layout-item-modal-owner">
+                                <lightning-input type="search" value={valueOwnerModal}
+                                    onchange={changeOwnerUser}></lightning-input>
+                                <ul>
+                                    <template for:each={OwnerUser} for:item="item">
+                                        <li key={item.Id} class="list-owner-user" onclick={handleClickOwnerModal}
+                                            data-item-value={item.Id}>
+                                            <lightning-icon icon-name="standard:avatar"
+                                                title="Approved"></lightning-icon>
+                                            <span class="lwc-name-owner">{item.Name}</span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </lightning-layout-item>
+                        </lightning-layout>
+
+                    </div>
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={cancelModalOwner}>Cancel</button>
+                        <button if:true={idOwnerUser} class="slds-button slds-button_neutral"
+                            onclick={submitModalOwnerAction}>Submit
+                            Action</button>
+                        <button if:false={idOwnerUser} class="slds-button slds-button_neutral"
+                            onclick={submitModalOwner}>Submit</button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+
+        <!--Modal Delete flag-->
+        <template if:true={showDelModal}>
+            <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 class="slds-modal__title slds-hyphenate">Delete Modal</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium lwc-text">
+                        Are you sure delete delete?
+                    </div>
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral"
+                            onclick={handleCancelModalDelete}>Cancel</button>
+                        <button if:true={showDeleteAction} class="slds-button slds-button_brand"
+                            onclick={handleDeleteModalDelete}>Delete</button>
+                        <button if:false={showDeleteAction} class="slds-button slds-button_brand"
+                            onclick={handleDeleteModalDeleteFlag}>Delete
+                            Action</button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+
+        <!-- <c-detail-member if:true={showDetailModal} oncanceldetail={cancelDetail}
+            rowdetails={rowDetails}></c-detail-member> -->
+    </lightning-card>
+</template>

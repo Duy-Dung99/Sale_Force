@@ -1,0 +1,80 @@
+.lwc-border {
+    border: 1px solid #74b9ff;
+    margin: 12px;
+}
+
+.lwc-action {
+    position: relative;
+}
+
+.lwc-action ul {
+    border: 1px solid black;
+    position: absolute;
+}
+
+.wrap {
+    float: left;
+    margin: 0 20px 0 0;
+}
+
+.content {
+    background-color: #444;
+    width: 200px;
+    height: 250px;
+    position: absolute;
+    display: none;
+}
+
+.hitter {
+    width: 500px;
+    height: 500px;
+    border: 1px solid #ee0000;
+    display: none;
+}
+
+.lwc-status {
+    margin-right: 8px;
+}
+
+.lwc-text {
+    padding: 12px !important;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.lwc-modal-owner {
+    display: unset;
+}
+
+.lwc-layout-item-modal-owner ul li {
+    padding: 6px 24px;
+    cursor: pointer;
+}
+
+.lwc-name-owner {
+    margin-left: 8px;
+}
+
+.lwc-layout-item-modal-owner ul {
+    margin: 0 12px 12px 12px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 8px;
+}
+
+.lwc-layout-item-modal-owner ul li:hover {
+    background-color: #f1f2f6;
+}
+
+@media (min-width: 48em) {
+    .slds-modal__container {
+        margin-top: -4%;
+    }
+}
+
+.lwc-layout-top {
+    justify-content: space-between;
+}
+
+.lwc-no-data {
+    margin-left: 50%;
+}

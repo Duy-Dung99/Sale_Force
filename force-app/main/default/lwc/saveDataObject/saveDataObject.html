@@ -1,0 +1,38 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-card>
+        <lightning-record-edit-form object-api-name={test2Object} onsuccess={handleAccountCreated}>
+            <lightning-messages></lightning-messages>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name={nameFile}></lightning-input-field>
+                    <div class="lwc-gender">
+                        <template for:each={genderOptions} for:item="item" for:index="index">
+                            <div key={item.value}>
+                                <lightning-input type="radio" value={item.value} label={item.label}></lightning-input>
+                            </div>
+                        </template>
+                    </div>
+                    <lightning-input-field field-name={birthdatFile} class="aaa"
+                        value={birthdayValue}></lightning-input-field>
+                    <lightning-input-field field-name={phoneFile}></lightning-input-field>
+                    <lightning-input-field field-name={emailFile}></lightning-input-field>
+                    <lightning-input-field field-name={otherFile}></lightning-input-field>
+                </div>
+            </div>
+            <lightning-button class="lwc-btn" type="submit" variant="brand" label="Create Account"></lightning-button>
+        </lightning-record-edit-form>
+    </lightning-card>
+
+    <lightning-card title="Account Record Create Form" icon-name="standard:account">
+        <div class="slds-var-p-around_x-small">
+            <lightning-input value={recAccount.Name} label="Account Name" onchange={handelNamechange}></lightning-input>
+            <lightning-input value={recAccount.Phone} label="Phone" onchange={handelPhonechange}></lightning-input>
+            <lightning-input value={recAccount.Rating} label="Rating" onchange={handelRatingchange}></lightning-input>
+            <lightning-input value={recAccount.Industry} label="Industry"
+                onchange={handelinduschange}></lightning-input>
+            <br />
+            <lightning-button label="Save Account Rec" onclick={createAccRec} variant="brand"></lightning-button>
+        </div>
+    </lightning-card>
+</template>

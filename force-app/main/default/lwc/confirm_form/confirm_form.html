@@ -1,0 +1,49 @@
+<template>
+    <lightning-card>
+        <div class="slds-p-around_x-small slds-col slds-size_1-of-2">
+            <h1 class="slds-text-color_success">Create Account</h1>
+            <lightning-input label="FullName" type="text" value={newAccount.userName}
+                onchange={handleNameChange}></lightning-input>
+            <div class="lwc-flex">
+                <lightning-input type="checkbox" value={newAccount.gender}
+                    onchange={handleGenderChange}></lightning-input>
+                <span>{newAccount.gender}</span>
+            </div>
+            <lightning-input label="Birthday" type="date" value={newAccount.birdthDay} onchange={handleBirthdayChange}
+                required></lightning-input>
+            <lightning-input label="Phone" type="phone" value={newAccount.mobieNumber} onchange={handlePhoneChange}
+                required></lightning-input>
+            <lightning-input label="Email" type="email" value={newAccount.email} onchange={handleEmailChange}
+                required></lightning-input>
+            <lightning-input label="Note" type="text" value={newAccount.note}
+                onchange={handleNoteChange}></lightning-input>
+            <div class="lwc-flex">
+                <lightning-input type="checkbox" value={newAccount.status}
+                    onchange={handleStatusChange}></lightning-input>
+                <span>{newAccount.status}</span>
+            </div>
+        </div>
+        <div class="lwc-box-btn">
+            <lightning-button class="lwc-btn" label="Cancel" onclick={handleCancel}>
+            </lightning-button>
+            <lightning-button class="lwc-btn" variant="brand" label="Create new" onclick={handleAdd}>
+            </lightning-button>
+        </div>
+    </lightning-card>
+    <br>
+    <!-- <lightning-card title="Create Account" icon-name="standard:account">
+        <lightning-record-edit-form object-api-name={createUserObject} onsuccess={handleAccountCreated}>
+            <lightning-messages></lightning-messages>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name={nameFile}></lightning-input-field>
+                    <lightning-input-field field-name={phoneFile}></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    More lightning-input-field components here
+                </div>
+            </div>
+            <lightning-button type="submit" variant="brand" label="Create Account"></lightning-button>
+        </lightning-record-edit-form>
+    </lightning-card> -->
+</template>

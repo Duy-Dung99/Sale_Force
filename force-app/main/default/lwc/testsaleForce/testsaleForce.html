@@ -1,0 +1,304 @@
+<template>
+    <lightning-card>
+        <h2 class="slds-text-heading_small slds-m-bottom_small">
+            Click the buttons to activate the <code>onclick</code> handler and view the label of the clicked button.
+        </h2>
+        <p class="slds-p-horizontal_small">
+            Card Body (custom component)
+        </p>
+        <lightning-button onclick={handleClick} variant="success" label="Neutral" title="Click"></lightning-button>
+        <lightning-button onclick={handleValue} variant="success" label="Value input" title="Click"></lightning-button>
+    </lightning-card>
+    <br>
+    <lightning-card>
+        <lightning-layout style="display: flex; align-items:center ">
+            <lightning-layout-item>
+                <lightning-input id="myInput" flexibility="auto" label="email"></lightning-input>
+                <lightning-input flexibility="auto" label="password"></lightning-input>
+                <lightning-input flexibility="auto" label="adresss"></lightning-input>
+            </lightning-layout-item>
+            <!-- <lightning-layout-item size="9">
+                <lightning-button variant="success" label="Neutral" title="Click"></lightning-button>
+                <lightning-button label="Click"></lightning-button>
+            </lightning-layout-item> -->
+        </lightning-layout>
+    </lightning-card>
+    <br>
+    <lightning-card>
+        <lightning-layout>
+            <lightning-layout>
+                <lightning-layout-item flexibility="auto" padding="around-small">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">1</div>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" padding="around-small">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">2</div>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" padding="around-small">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">3</div>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" padding="around-small">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">4</div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout>
+    </lightning-card>
+    <br>
+    <lightning-card>
+        hello - {firstName} + {lastName}
+        <br>
+        Hello, {greeting}
+        <lightning-input label="Name" onchange={handleChange1}></lightning-input>
+
+        <div class="slds-m-around_medium">
+            <lightning-input name='firstName' label="First Name" onchange={handleChangeFullName}></lightning-input>
+            <lightning-input name='lastName' label="Last Name" onchange={handleChangeFullName}></lightning-input>
+            <p class="slds-m-top_medium">Uppercased Full Name: {uppercasedFullName}</p>
+        </div>
+    </lightning-card>
+    <br>
+    <lightning-card title="HelloConditionalRendering" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+            <lightning-input type="checkbox" label="Show details" onchange={handleChange}></lightning-input>
+            <template lwc:if={areDetailsVisible}>
+                <div class="slds-m-vertical_medium">
+                    These are the details!
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+    <br>
+    <lightning-card title="HelloForEach" icon-name="custom:custom14">
+        <ul class="slds-m-around_medium">
+            <template for:each={contacts} for:item="contact" for:index="index">
+                <li key={contact.Id}>
+                    {index} - {contact.Name}, {contact.Title}
+                </li>
+            </template>
+        </ul>
+    </lightning-card>
+    <br>
+    <lightning-card title="HelloIterator" icon-name="custom:custom14">
+        <ul class="slds-m-around_medium">
+            <template iterator:it={contacts}>
+                <li key={it.value.Id}>
+                    <div lwc:if={it.first} class="list-first">{it.first}</div>
+                    {it.value.Name}, {it.value.Title}
+                    <div lwc:if={it.last} class="list-last">{it.last}</div>
+                </li>
+            </template>
+        </ul>
+    </lightning-card>
+    <br>
+    <lightning-card title="Render Multiple Template" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+            <h2 class="slds-text-heading_medium slds-m-bottom_medium">Choose your option</h2>
+
+            <lightning-button variant="destructive" label="Sign Up" title="Sign Up"
+                onclick={handleClickMutilpleTeamplate} class="slds-m-left_x-small"></lightning-button>
+
+            <lightning-button variant="success" label="Sign In" title="Sign In" onclick={handleClickMutilpleTeamplate}
+                class="slds-m-left_x-small"></lightning-button>
+
+        </div>
+    </lightning-card>
+    <br>
+    <lightning-layout>
+        <lightning-layout-item>
+            <lightning-button label="Previous" icon-name="utility:chevronleft"
+                onclick={previousHandler}></lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item flexibility="grow"></lightning-layout-item>
+        <lightning-layout-item>
+            <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right"
+                onclick={nextHandler}></lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+    <br>
+    <!-- eventSimple.html -->
+    <!-- 
+    <lightning-card title="EventSimple" icon-name="custom:custom9">
+        <div class="slds-m-around_medium">
+            <p class="slds-m-vertical_medium content">Page {page}</p>
+            <c-paginator onprevious={previousHandler} onnext={nextHandler}></c-paginator>
+        </div>
+    </lightning-card> -->
+
+    <!-------------------------------------------------------------------->
+
+    <br>
+    <lightning-card>
+        <p if:true={test}>Hello Bẹn</p>
+        <p if:false={test}>Mình là Dũng đây :v</p>
+        <button onclick={click}>click</button>
+    </lightning-card>
+    <br>
+
+    <lightning-card>
+        <lightning-radio-group name="gender" label="Gender" options={genderOptions}
+            type="radio"></lightning-radio-group>
+        <lightning-button label="Get Value" onclick={getValue}></lightning-button>
+    </lightning-card>
+    <br>
+
+    <lightning-card>
+        <lightning-tabset>
+            <lightning-tab label="Item One">
+                One Content !
+            </lightning-tab>
+            <lightning-tab label="Item Two" title="2nd tab extended title">
+                Two Content !
+            </lightning-tab>
+            <lightning-tab label="Item Three">
+                Three Content !
+            </lightning-tab>
+        </lightning-tabset>
+    </lightning-card>
+    <br>
+    <!-- ----------------- -->
+    <lightning-card title="Manage Accounts">
+
+        <lightning-layout>
+            <lightning-layout-item padding="around-small" size="3">
+                <lightning-input data-search="condition" variant="label-hidden" type="text"></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="9">
+                <lightning-button variant="brand" onclick={search} label="Search" title="Search"></lightning-button>
+                <lightning-button variant="brand-outline" onclick={accountNew} class="slds-p-left_x-small" label="New"
+                    title="New"></lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <lightning-layout>
+            <lightning-layout-item padding="around-small" size="12" class="lwc-border">
+                <table class="slds-table">
+                    <colgroup>
+                        <col width="25%">
+                        <col width="25%">
+                        <col width="25%">
+                        <col width="25%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>ACCOUNT NAME</th>
+                            <th>PHONE</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={listAccount} for:item="item" for:index="index">
+                            <tr key={item.Id}>
+                                <td>{index}</td>
+                                <td>{item.name}</td>
+                                <td>{item.phone}</td>
+                                <td>
+                                    <lightning-button-icon data-index={index} size="small" icon-name="utility:edit"
+                                        onclick={clickEditIcon} title="Edit"></lightning-button-icon>
+                                    <lightning-button-icon data-index={index} size="small" icon-name="utility:delete"
+                                        onclick={clickDelIcon} class="slds-m-left_xx-small"
+                                        title="Delete"></lightning-button-icon>
+                                </td>
+                            </tr>
+                        </template>
+
+                    </tbody>
+                </table>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <!--Modal Edit-->
+        <template if:true={showEditModal}>
+            <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 class="slds-modal__title slds-hyphenate">Edit Order</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-input class="edit-name" value={newList.name} data-edit="name" type="text"
+                            label="Name" name="name"></lightning-input>
+                        <lightning-input class="edit-phone" value={newList.phone} data-edit="phone" type="text"
+                            label="Phone" name="phone" onkeyup={handleAdd}></lightning-input>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={handleCancel}>Cancel</button>
+                        <button lwc:if={newList.name} class="slds-button slds-button_brand"
+                            onclick={handleSave}>Save</button>
+                        <button lwc:else class="slds-button slds-button_neutral" onclick={handleClickAdd}>Add</button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+
+        <!--Modal Delete-->
+        <template if:true={showDelModal}>
+            <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 class="slds-modal__title slds-hyphenate">Delete Order</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        Do you want to remove this record ?
+                    </div>
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={handleCancel}>Cancel</button>
+                        <button class="slds-button slds-button_brand" onclick={handleDelete}>Delete</button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+
+        <lightning-spinner if:true={isLoading}></lightning-spinner>
+
+    </lightning-card>
+    <br>
+
+
+    <!-- // create a record -->
+    <lightning-card>
+        <lightning-record-edit-form object-api-name={accountObject} onsuccess={handleAccountCreated}>
+            <lightning-messages></lightning-messages>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name={nameField}></lightning-input-field>
+                    <lightning-input-field field-name={accountEmail}></lightning-input-field>
+                    <lightning-input-field field-name={phoneField}></lightning-input-field>
+                    <lightning-input-field field-name={accountSite}></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <!-- More lightning-input-field components here -->
+                </div>
+            </div>
+            <lightning-button type="submit" variant="brand" label="Create Account"
+                onclick={handleAccountCreated}></lightning-button>
+        </lightning-record-edit-form>
+    </lightning-card>
+
+    <!-- // load a record -->
+    <lightning-card>
+        <lightning-record-view-form record-id={recordId} object-api-name={accountObject}>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <!-- Other record data here -->
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-formatted-text value={nameValue} class="slds-text-heading_large">
+                    </lightning-formatted-text>
+                </div>
+            </div>
+        </lightning-record-view-form>
+    </lightning-card>
+
+    <lightning-card>
+        <form>
+            <lightning-input type="text" label="LastName" onchange={handleLastNameChange} required>
+            </lightning-input>
+            <lightning-input type="text" label="Email" onchange={handleEmailChange}>
+            </lightning-input>
+            <lightning-button label="Create Contact" class="slds-m-top_medium"></lightning-button>
+        </form>
+    </lightning-card>
+    <br>
+
+</template>
