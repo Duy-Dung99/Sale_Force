@@ -1,5 +1,6 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
+import getOwner from '@salesforce/apex/AccountCreate.getOwner'
 export default class DetailMember extends NavigationMixin(LightningElement) {
     @api full_name
     @api gender
@@ -12,8 +13,19 @@ export default class DetailMember extends NavigationMixin(LightningElement) {
     @api id
     @api owner_user
     @track detailMember = {};
+    @track OwnerUser = [];
+
 
     connectedCallback() {
+
+        getOwner({ searchKey: '' })
+            .then((result) => {
+                console.log(result, 'getOwner');
+                this.OwnerUser = result
+            }).catch(error => {
+                console.log(error);
+            })
+
         this.detailMember = {
             full_name: this.full_name,
             gender: this.gender,
@@ -29,7 +41,6 @@ export default class DetailMember extends NavigationMixin(LightningElement) {
         // if (this.rowdetails) {
         //     this.detailMember = this.rowdetails
         // }
-        console.log(this.full_name, 'connectedCallback');
     }
 
     handleCancelDetail() {
@@ -40,6 +51,11 @@ export default class DetailMember extends NavigationMixin(LightningElement) {
             },
         })
     }
+
+
+
+
+
 
     // testEvent() {
     //     this.dispatchEvent(new CustomEvent('canceldetail'));

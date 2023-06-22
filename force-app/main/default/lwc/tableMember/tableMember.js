@@ -1,4 +1,4 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import generateData from './generateData';
 import getListMember from '@salesforce/apex/AccountCreate.getListMember'
@@ -6,6 +6,9 @@ import updateCheckboxMutipleDeleteFlag from '@salesforce/apex/AccountCreate.upda
 import updateOwner from '@salesforce/apex/AccountCreate.updateOwner'
 import getTotalMembers from '@salesforce/apex/AccountCreate.getTotalMembers'
 import getOwner from '@salesforce/apex/AccountCreate.getOwner'
+import { RefreshEvent } from 'lightning/refresh';
+import { updateRecord } from 'lightning/uiRecordApi';
+
 
 import { NavigationMixin } from 'lightning/navigation';
 import { refreshApex } from '@salesforce/apex';
@@ -55,7 +58,7 @@ export default class TableMember extends NavigationMixin(LightningElement) {
 
     //---value row acction---
     @track idOnerDeleteFlag;
-    @track idOwnerUser;
+    @api idOwnerUser;
 
     //--- value sort datatable---
     @track sortBy;
@@ -69,7 +72,6 @@ export default class TableMember extends NavigationMixin(LightningElement) {
     @track showOwnerModal = false;
     @track showDelModal = false;
     @track showDelModalAcctionDeleteFlag = false;
-    @track showDetailModal = false;
 
 
     //--------->>
@@ -87,8 +89,8 @@ export default class TableMember extends NavigationMixin(LightningElement) {
                     if (result <= 0) {
                         this.isCheckData = true
                     } else {
-                        const data = result
                         this.newlistAccount = result
+                        // const data = result
                         // this.listAccount = generateData({ data })
                     }
                 })
@@ -112,6 +114,7 @@ export default class TableMember extends NavigationMixin(LightningElement) {
         } catch (error) {
             console.log(error);
         }
+
     }
 
     get newGenerateData() {
@@ -186,17 +189,17 @@ export default class TableMember extends NavigationMixin(LightningElement) {
     }
 
     //--> render data
-    async renderData() {
-        await getListMember({
+    renderData() {
+        getListMember({
             keyword: '',
             status: this.status,
             pageNumber: this.pageNumber,
             pageSize: this.pageSize
         })
             .then(result => {
-                const data = result
-                console.log(11111111);
-                this.newlistAccount = result
+                this.newlistAccount = result;
+                this.dispatchEvent(new RefreshEvent());
+                // const data = result
                 // refreshApex(this.listAccount = generateData({ data }))
             })
             .catch(error => {
@@ -208,6 +211,16 @@ export default class TableMember extends NavigationMixin(LightningElement) {
                     })
                 );
             })
+    }
+
+    showToastSuccess() {
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Success',
+                message: 'Success..!',
+                variant: 'success',
+            })
+        );
     }
 
     changeSearch() {
@@ -265,9 +278,9 @@ export default class TableMember extends NavigationMixin(LightningElement) {
             .then(() => {
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        title: 'Success',
-                        message: 'Success..!',
-                        variant: 'success',
+                        title: 'Error',
+                        message: error.body.message,
+                        variant: 'error'
                     })
                 );
                 this.showDelModal = false;
@@ -315,15 +328,9 @@ export default class TableMember extends NavigationMixin(LightningElement) {
     submitModalOwner(event) {
         updateOwner({ recordIds: this.recordIds, newOwnerId: this.newOwnerId })
             .then(() => {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Success',
-                        message: 'Success..!',
-                        variant: 'success',
-                    })
-                );
+                this.showToastSuccess()
                 // this.renderData()
-                location.reload()
+                // location.reload()
                 this.showOwnerModal = false
             }).catch((error) => {
                 this.dispatchEvent(
@@ -342,7 +349,8 @@ export default class TableMember extends NavigationMixin(LightningElement) {
         if (searchKey) {
             getOwner({ searchKey: searchKey })
                 .then((result) => {
-                    this.OwnerUser = result
+                    this.OwnerUser = result;
+                    refreshApex(this.OwnerUser);
                     console.log(result);
                 }).catch((error) => {
                     console.error(error);
@@ -350,7 +358,8 @@ export default class TableMember extends NavigationMixin(LightningElement) {
         } else if (searchKey === '') {
             getOwner({ searchKey: this.searchKeyOwner })
                 .then((result) => {
-                    this.OwnerUser = result
+                    this.OwnerUser = result;
+                    refreshApex(this.OwnerUser);
                     console.log(result);
                 }).catch((error) => {
                     console.error(error);
@@ -410,13 +419,7 @@ export default class TableMember extends NavigationMixin(LightningElement) {
             console.log(recordId);
             await updateCheckboxMutipleDeleteFlag({ recordIds: recordId })
                 .then(() => {
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Success',
-                            message: 'Success..!',
-                            variant: 'success',
-                        })
-                    );
+                    this.showToastSuccess()
                     this.showDelModal = false;
                     // this.renderData();
                     location.reload();
@@ -435,9 +438,8 @@ export default class TableMember extends NavigationMixin(LightningElement) {
     }
 
     showRowDetails(row) {
-        this.showDetailModal = true;
         // this.rowDetails = row;
-        console.log(JSON.stringify(row), 'showRowDetails');
+        console.log(JSON.stringify(row.owner_user), 'showRowDetails');
 
         let componentDef = {
             componentDef: "c:detailMember",
@@ -451,9 +453,10 @@ export default class TableMember extends NavigationMixin(LightningElement) {
                 ownerId: row.ownerId,
                 delete_flag: row.delete_flag,
                 id: row.id,
-                owner_user: row.owner_user,
+                owner_user: this.getOwnerId(row.owner_user),
             }
         };
+
         // Encode the componentDefinition JS object to Base64 format to make it url addressable
         let encodedComponentDef = btoa(JSON.stringify(componentDef));
         console.log(encodedComponentDef);
@@ -464,6 +467,17 @@ export default class TableMember extends NavigationMixin(LightningElement) {
             }
         });
 
+    }
+
+    getOwnerId(nameOwner) {
+        let newOwner = '';
+        this.OwnerUser.forEach((element) => {
+            if (nameOwner === element.Name) {
+                newOwner = element.Id;
+                return;
+            }
+        })
+        return newOwner;
     }
 
     showRowChangeOwner(row) {
@@ -478,16 +492,13 @@ export default class TableMember extends NavigationMixin(LightningElement) {
         console.log(this.newOwnerId, 'newOwnerId');
         updateOwner({ recordIds: this.idOwnerUser, newOwnerId: this.newOwnerId })
             .then(() => {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Success',
-                        message: 'Success..!',
-                        variant: 'success',
-                    })
-                );
-                // this.renderData()
-                location.reload()
+                this.showToastSuccess()
+                this.renderData()
+                // location.reload()
+                // this.dispatchEvent(new RefreshEvent());
                 this.showOwnerModal = false
+                // this.updateRecordView(this.idOwnerUser)
+
             }).catch((error) => {
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -499,10 +510,9 @@ export default class TableMember extends NavigationMixin(LightningElement) {
             })
     }
 
-    cancelDetail() {
-        this.showDetailModal = false;
+    updateRecordView(recordId) {
+        updateRecord({ fields: { Id: recordId } });
     }
-
 
     //panigation
     handleOnselectLitmit(event) {

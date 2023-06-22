@@ -13,3 +13,10 @@
 .lwc-boder-input {
     border-bottom: 1px solid gray;
 }
+
+@media (min-width: 48em) {
+    .slds-modal__container {
+        width: 70% !important;
+        max-width: 82rem !important;
+    }
+}
