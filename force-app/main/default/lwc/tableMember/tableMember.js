@@ -89,9 +89,9 @@ export default class TableMember extends NavigationMixin(LightningElement) {
                     if (result <= 0) {
                         this.isCheckData = true
                     } else {
-                        this.newlistAccount = result
-                        // const data = result
-                        // this.listAccount = generateData({ data })
+                        // this.newlistAccount = result
+                        const data = result
+                        this.listAccount = generateData({ data })
                     }
                 })
                 .catch(error => {
@@ -128,7 +128,8 @@ export default class TableMember extends NavigationMixin(LightningElement) {
             ownerId: value.OwnerId,
             delete_flag: value.Delete_Flag__c,
             id: value.Id,
-            owner_user: this.getOwners(value.Owner_User__c),
+            // owner_user: this.getOwners(value.Owner_User__c),
+            owner_user: value.Owner_User__c,
         }))
     }
 
@@ -159,8 +160,8 @@ export default class TableMember extends NavigationMixin(LightningElement) {
                     console.log(result);
                     if (result <= 0) {
                         const data = result
-                        this.newlistAccount = result
-                        // this.listAccount = generateData({ data })
+                        // this.newlistAccount = result
+                        this.listAccount = generateData({ data })
                         this.dispatchEvent(
                             new ShowToastEvent({
                                 title: 'Error',
@@ -169,9 +170,9 @@ export default class TableMember extends NavigationMixin(LightningElement) {
                             })
                         );
                     } else {
-                        // const data = result
-                        this.newlistAccount = result
-                        // this.listAccount = generateData({ data })
+                        // this.newlistAccount = result
+                        const data = result
+                        this.listAccount = generateData({ data })
                         console.log(this.listAccount.length);
                     }
 
@@ -197,10 +198,10 @@ export default class TableMember extends NavigationMixin(LightningElement) {
             pageSize: this.pageSize
         })
             .then(result => {
-                this.newlistAccount = result;
+                // this.newlistAccount = result;
                 this.dispatchEvent(new RefreshEvent());
-                // const data = result
-                // refreshApex(this.listAccount = generateData({ data }))
+                const data = result
+                this.listAccount = generateData({ data })
             })
             .catch(error => {
                 this.dispatchEvent(
@@ -453,7 +454,8 @@ export default class TableMember extends NavigationMixin(LightningElement) {
                 ownerId: row.ownerId,
                 delete_flag: row.delete_flag,
                 id: row.id,
-                owner_user: this.getOwnerId(row.owner_user),
+                // owner_user: this.getOwnerId(row.owner_user),
+                owner_user: row.owner_user,
             }
         };
 
@@ -575,6 +577,7 @@ export default class TableMember extends NavigationMixin(LightningElement) {
     }
 
     sortData(fieldname, direction) {
+        console.log(JSON.parse(JSON.stringify(this.newGenerateData)), 'newGenerateData');
         let parseData = JSON.parse(JSON.stringify(this.listAccount));
         // Return the value stored in the field
         let keyValue = (a) => {
@@ -589,6 +592,7 @@ export default class TableMember extends NavigationMixin(LightningElement) {
             // sorting values based on direction
             return isReverse * ((x > y) - (y > x));
         });
+        console.log(parseData, 'parseData');
         this.listAccount = parseData;
     }
 }
